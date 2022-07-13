@@ -31,6 +31,43 @@ class ViewController: UIViewController {
             self?.view.layoutIfNeeded()
         })
     }
+    
+    // Observable의 생명주기 (기본형태)
+    // 1. Create
+    // 2. Subscribe
+    // 3. onNext
+    // -----  끝 ------
+    // 4. onCompleted / onError
+    // 5. Disposed
+    
+    func downloadJSON(_ url: String) -> Observable<String?> {
+        // 1. 비동기로 생기는 데이터를 Observable로 감싸서 리턴하는 방법
+        
+        // 1) create
+        return Observable.create() { emitter in
+            let url = URL(string: url)!
+            let task = URLSession.shared.dataTask(with: url) { data, _, err in
+                guard err == nil else {
+                    // 3) onError
+                    emitter.onError(err!)
+                    return
+                }
+                
+                if let dat = data, let json = String(data: dat, encoding: .utf8)  {
+                    // 2) onNext
+                    emitter.onNext(json)
+                }
+                // 3) onCompleted
+                emitter.onCompleted()
+            }
+            
+            task.resume()
+            
+            return Disposables.create() {
+                task.cancel()
+            }
+        }
+    }
 
     // MARK: SYNC
 
@@ -38,17 +75,19 @@ class ViewController: UIViewController {
 
     @IBAction func onLoad() {
         editView.text = ""
-        self.setVisibleWithAnimation(self.activityIndicator, true)
+        setVisibleWithAnimation(activityIndicator, true)
         
-        DispatchQueue.global().async {
-            let url = URL(string: MEMBER_LIST_URL)!
-            let data = try! Data(contentsOf: url)
-            let json = String(data: data, encoding: .utf8)
-            
-            DispatchQueue.main.async {
-                self.editView.text = json
-                self.setVisibleWithAnimation(self.activityIndicator, false)
+        // 2. Observable로 오는 데이터를 받아서 처리하는 방법
+        downloadJSON(MEMBER_LIST_URL)
+            .subscribe { event in
+                switch event {
+                case let .next:
+                    break
+                case .completed:
+                    break
+                case .error:
+                    break
+                }
             }
-        }   
     }
 }
