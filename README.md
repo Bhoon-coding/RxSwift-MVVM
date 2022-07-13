@@ -22,6 +22,8 @@ RxSwift의 근본적인 학습 자체보다는, 빠르게 사용법을 익혀 �
 
 ### [1교시] 개념잡기 - RxSwift를 사용한 비동기 프로그래밍
 
+- [x] 7.12 수강완료 
+
 1. Observable
 
    - Observable `create`
@@ -29,6 +31,8 @@ RxSwift의 근본적인 학습 자체보다는, 빠르게 사용법을 익혀 �
    - Disposable 로 작업 취소
 
 2. Sugar API
+
+- [x] 7.13 수강완료 
 
    - 간단한 생성 : `just`, `from`
    - 필터링 : `filter`, `take`
@@ -44,23 +48,33 @@ RxSwift의 근본적인 학습 자체보다는, 빠르게 사용법을 익혀 �
 
 ### [2교시] RxSwift 활용하기 - 쓰레드의 활용과 메모리 관리
 
+- [x] 7.13 수강완료 
+
 3. Observable Life-Cycle
    - Subscribed
    - Next
    - Completed / Error
    - Disposabled
 
+- [x] 7.13 수강완료 
+
 4. 순환참조와 메모리 관리
    - Unfinished Observable / Memory Leak
    - (참조) [클로져와 메모리 해제 실험](https://iamchiwon.github.io/2018/08/13/closure-mem/)
+
+- [x] 7.13 수강완료 
 	
 5. 쓰레드 분기
    - DispatchQueue, OperationQueue
    - `observeOn`, `subscribeOn`
 
+- [x] 7.13 수강완료 
+
 6. Stream의 분리 및 병합
    - `share`
    - `combine`, `merge`, `zip`
+
+- [x] 7.13 수강완료 
 
 <br/>
 <hr/>
