@@ -28,9 +28,11 @@ class MenuViewController: UIViewController {
         
         viewModel.totalPrice
             .map { $0.currencyKR() }
-            .subscribe(onNext: {
-                self.totalPrice.text = $0
-            })
+        // bind를 사용하면 [weak self] 처럼 순환참조 처리 안해줘도 됨
+            .bind(to: totalPrice.rx.text) // 아래와 같은뜻
+//            .subscribe(onNext: { [weak self] _ in
+//                self?.totalPrice.text = $0
+//            })
             .disposed(by: disposeBag)
     }
 
