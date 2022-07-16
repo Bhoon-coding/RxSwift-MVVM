@@ -19,8 +19,14 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.itemsCount
+            .map { "\($0)"}
+            .subscribe(onNext: {
+                self.itemCountLabel.text = $0
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.totalPrice
-            .scan(0, accumulator: +) // scan사용으로 기존값 + 100을 해줌
             .map { $0.currencyKR() }
             .subscribe(onNext: {
                 self.totalPrice.text = $0
