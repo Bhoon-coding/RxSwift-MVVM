@@ -11,7 +11,7 @@ import RxSwift
 
 class MenuListViewModel {
     
-    var menuObservable = PublishSubject<[Menu]>()
+    lazy var menuObservable = PublishSubject<[Menu]>()
     
     lazy var itemsCount = menuObservable.map {
         $0.map { $0.count }.reduce(0, +)
@@ -29,10 +29,6 @@ class MenuListViewModel {
         ]
         menuObservable.onNext(menus)
     }
-    
-    
-    
-    
     
     // Subject -> 외부에서 값을 통제
 }
