@@ -19,11 +19,11 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 26번째 .bind와 31번째 .subscribe는 같은동작
+        
         viewModel.itemsCount
             .map { "\($0)"}
-            .subscribe(onNext: {
-                self.itemCountLabel.text = $0
-            })
+            .bind(to: itemCountLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.totalPrice
