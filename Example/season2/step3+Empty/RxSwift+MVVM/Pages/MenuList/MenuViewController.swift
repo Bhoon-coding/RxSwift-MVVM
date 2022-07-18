@@ -12,12 +12,13 @@ import RxCocoa
 
 class MenuViewController: UIViewController {
     
+    // MARK: - Properties
+    
     let cellId = "MenuItemTableViewCell"
     let viewModel = MenuListViewModel()
     var disposeBag = DisposeBag()
     
     // MARK: - Life Cycle
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,34 +69,18 @@ class MenuViewController: UIViewController {
     @IBOutlet var totalPrice: UILabel!
 
     @IBAction func onClear() {
+        viewModel.clearAllItemSelections()
     }
 
     @IBAction func onOrder(_ sender: UIButton) {
         // TODO: no selection
-//        viewModel.totalPrice.onNext(100)
-        // showAlert("Order Fail", "No Orders")
-//        performSegue(withIdentifier: "OrderViewController", sender: nil)
+        viewModel.menuObservable.onNext([
+            Menu(name: "changed", price: Int.random(in: 100...1000), count: Int.random(in: 0...3)),
+            Menu(name: "changed", price: Int.random(in: 100...1000), count: Int.random(in: 0...3)),
+            Menu(name: "changed", price: Int.random(in: 100...1000), count: Int.random(in: 0...3))
+        ])
+
     }
     
-    func updateUI() {
-        itemCountLabel.text = "\(viewModel.itemsCount)"
-//        totalPrice.text = "\(viewModel.totalPrice.currencyKR())"
-    }
 }
 
-//extension MenuViewController: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return viewModel.menus.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuItemTableViewCell") as! MenuItemTableViewCell
-//
-//        let menu = viewModel.menus[indexPath.row]
-//        cell.title.text = menu.name
-//        cell.price.text = "\(menu.price)"
-//        cell.count.text = "\(menu.count)"
-//
-//        return cell
-//    }
-//}

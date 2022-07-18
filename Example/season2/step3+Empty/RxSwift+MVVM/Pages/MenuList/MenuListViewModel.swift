@@ -30,5 +30,19 @@ class MenuListViewModel {
         menuObservable.onNext(menus)
     }
     
+    func clearAllItemSelections() {
+        _ = menuObservable
+            .map { menus in
+                var newMenus = menus
+                return newMenus.map { menu in
+                    Menu(name: menu.name, price: menu.price, count: 0)
+                }
+            }
+            .take(1)
+            .subscribe(onNext: {
+                self.menuObservable.onNext($0)
+            })
+    }
+    
     // Subject -> 외부에서 값을 통제
 }
