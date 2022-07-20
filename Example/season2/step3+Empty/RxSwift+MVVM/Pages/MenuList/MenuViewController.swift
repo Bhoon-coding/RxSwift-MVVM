@@ -81,12 +81,6 @@ class MenuViewController: UIViewController {
 
     @IBAction func onOrder(_ sender: UIButton) {
         // TODO: no selection
-//        viewModel.menuObservable.onNext([
-//            Menu(name: "changed", price: Int.random(in: 100...1000), count: Int.random(in: 0...3)),
-//            Menu(name: "changed", price: Int.random(in: 100...1000), count: Int.random(in: 0...3)),
-//            Menu(name: "changed", price: Int.random(in: 100...1000), count: Int.random(in: 0...3))
-//        ])
-
     }
     
 }
