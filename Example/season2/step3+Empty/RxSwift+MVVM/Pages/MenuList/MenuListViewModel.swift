@@ -21,13 +21,26 @@ class MenuListViewModel {
     }
     
     init() {
-        let menus: [Menu] = [
-            Menu(id: 0, name: "튀김", price: 500, count: 0),
-            Menu(id: 1, name: "떡볶이", price: 2000, count: 0),
-            Menu(id: 2, name: "순대", price: 1000, count: 0),
-            Menu(id: 3, name: "오뎅", price: 500, count: 0)
-        ]
-        menuObservable.onNext(menus)
+        
+        _ = APIService.fetchAllMenusRx()
+            .map { data -> [MenuItem] in
+                struct Response: Decodable {
+                    let menus: [MenuItem]
+                }
+                let response = try! JSONDecoder().decode(Response.self, from: data)
+                
+                return response.menus
+            }
+            .map { menuItems -> [Menu] in
+                var menus: [Menu] = []
+                menuItems.enumerated().forEach { index, item in
+                    let menu = Menu.fromMenuItems(id: index, item: item)
+                    menus.append(menu)
+                }
+                 return menus
+            }
+            .take(1)
+            .bind(to: menuObservable)
     }
     
     func clearAllItemSelections() {
